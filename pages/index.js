@@ -64,18 +64,16 @@ export default function Home() {
       </header>
 
       <main className={styles.container}>
-        <section>
-          <h1 className={styles.title}>
-            Welcome to <br/>
-            <img className={styles.bugsBuddyLogo} src='../images/logo.jpg' alt='BugsBuddy logo'></img>
-          </h1>
-
+        <section className={styles.headerWelcome}>
+          <h1 className={styles.title}>Welcome to</h1>
+          <img className={styles.bugsBuddyLogo} src='../images/logo.jpg' alt='BugsBuddy logo'></img>
+        </section> 
+        <section > 
           <p className={styles.description}>
             Get started by selecting the following filter
           </p>
-        </section>
 
-        <section>
+          </section>
           <Select
             sx={{        
               width: 250,
@@ -85,8 +83,9 @@ export default function Home() {
             <MenuItem value={1}>All</MenuItem>
             <MenuItem value={2}>Open</MenuItem>
             <MenuItem value={3}>Closed</MenuItem>
+          
           </Select>
-
+          <section>
           {issues?.map((issue)=> (
             <div>
               <h2 className={styles.issueTitle}>{issue.node.title} </h2>
