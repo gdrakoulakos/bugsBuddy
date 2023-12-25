@@ -79,6 +79,7 @@ export default function Home() {
               width: 250,
               height: 50,
             }}
+            defaultValue={1}
           >
             <MenuItem value={1}>All</MenuItem>
             <MenuItem value={2}>Open</MenuItem>
