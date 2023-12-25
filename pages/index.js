@@ -63,7 +63,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </header>
 
-      <main>
+      <main className={styles.container}>
         <section>
           <h1 className={styles.title}>
             Welcome to <br/>
@@ -89,18 +89,14 @@ export default function Home() {
 
           {issues?.map((issue)=> (
             <div>
-              <h2>{issue.node.title} </h2>
+              <h2 className={styles.issueTitle}>{issue.node.title} </h2>
               <p className={styles.issueBody}>{issue.node.body}</p>
               <p>{new Date(issue.node.createdAt).toLocaleString()}</p>
               <p>{issue.node.state}</p>
             </div>
           ))}
-          
-        
-          
 
         </section>
-
       </main>
 
       <footer>
