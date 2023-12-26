@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ApolloClient, InMemoryCache, createHttpLink, gql } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { Select, MenuItem } from "@mui/material";
+import IssueItem from '../components/IssueItem';
 import styles from '../styles/Home.module.css';
 
 const httpLink = createHttpLink({
@@ -89,12 +90,13 @@ export default function Home() {
           </Select>
           <section className={styles.issueDashboard}>
           {issues?.map((issue)=> (
-            <div className={styles.issueContainer}>              
-              <h3 className={styles.issueTitle}>{issue.node.title} </h3>               
-              <p className={styles.issueBody}>{issue.node.body}</p>              
-              <p className={styles.issueState} style={{color: issue.node.state === "CLOSED" ? "purple" : "green"}}>{issue.node.state}</p>
-              <p className={styles.issueDate}>{new Date(issue.node.createdAt).toLocaleString()}</p>
-            </div>
+            <IssueItem
+            key={issue.node.title}
+            title={issue.node.title}
+            body={issue.node.body}
+            state={issue.node.state}
+            createdAt={issue.node.createdAt}
+          />
           ))}
         </section>
       </main>
