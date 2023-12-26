@@ -74,36 +74,34 @@ export default function Home() {
           <p className={styles.description}>
             Get started by selecting the following filter
           </p>
-
-          </section>
-          <Select
-            onChange={(e) => setStateFilter(e.target.value)}
-            sx={{        
-              width: 250,
-              height: 50,
-            }}
-            defaultValue="OPEN"
-          >
-            <MenuItem value="OPEN">Open</MenuItem>
-            <MenuItem value="CLOSED">Closed</MenuItem>
-          
-          </Select>
-          <section className={styles.issueDashboard}>
-          {issues?.map((issue)=> (
-            <IssueItem
-            key={issue.node.title}
-            title={issue.node.title}
-            body={issue.node.body}
-            state={issue.node.state}
-            createdAt={issue.node.createdAt}
-          />
-          ))}
         </section>
-      </main>
-
-      <footer>
+        <Select
+          onChange={(e) => setStateFilter(e.target.value)}
+          sx={{        
+            width: 250,
+            height: 50,
+          }}
+          defaultValue="OPEN"
+        >
+          <MenuItem value="OPEN">Open</MenuItem>
+          <MenuItem value="CLOSED">Closed</MenuItem>
+        
+        </Select>
+        <section className={styles.issueDashboard}>
+        {issues?.map((issue)=> (
+          <IssueItem
+          key={issue.node.title}
+          title={issue.node.title}
+          body={issue.node.body}
+          state={issue.node.state}
+          createdAt={issue.node.createdAt}
+        />
+        ))}
+      </section>
+    </main>
+     <footer>
       © {new Date().getFullYear()} George Drakoulakos
-      </footer>
+     </footer>
     </div>
   );
 }
