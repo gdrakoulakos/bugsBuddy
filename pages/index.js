@@ -26,6 +26,8 @@ const client = new ApolloClient({
 export default function Home() {
 
   const [issues, setIssues] = useState([]);
+  const [stateFilter, setStateFilter] = useState("OPEN");
+
 
   useEffect(() => {
     client
@@ -33,7 +35,7 @@ export default function Home() {
         query: gql`
           query {
             repository(owner: "reactjs", name: "reactjs.org") {
-              issues (first: 10, orderBy: { field: CREATED_AT, direction: DESC }) {
+              issues (first: 10, states: ${stateFilter}, orderBy: { field: CREATED_AT, direction: DESC }) {
                 edges {
                   node {
                     title
@@ -54,7 +56,7 @@ export default function Home() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [stateFilter]);
 
   return (
     <div className={styles.container}>
@@ -65,7 +67,6 @@ export default function Home() {
 
       <main className={styles.container}>
         <section className={styles.headerWelcome}>
-          <h1 className={styles.title}>Welcome to</h1>
           <img className={styles.bugsBuddyLogo} src='../images/logo.jpg' alt='BugsBuddy logo'></img>
         </section> 
         <section > 
@@ -75,34 +76,32 @@ export default function Home() {
 
           </section>
           <Select
+            onChange={(e) => setStateFilter(e.target.value)}
             sx={{        
               width: 250,
               height: 50,
             }}
-            defaultValue={1}
+            defaultValue="OPEN"
           >
-            <MenuItem value={1}>All</MenuItem>
-            <MenuItem value={2}>Open</MenuItem>
-            <MenuItem value={3}>Closed</MenuItem>
+            <MenuItem value="OPEN">Open</MenuItem>
+            <MenuItem value="CLOSED">Closed</MenuItem>
           
           </Select>
-          <section>
+          <section className={styles.issueDashboard}>
           {issues?.map((issue)=> (
-            <div>
-              <h2 className={styles.issueTitle}>{issue.node.title} </h2>
-              <p className={styles.issueBody}>{issue.node.body}</p>
-              <p>{new Date(issue.node.createdAt).toLocaleString()}</p>
-              <p>{issue.node.state}</p>
+            <div className={styles.issueContainer}>              
+              <h3 className={styles.issueTitle}>{issue.node.title} </h3>               
+              <p className={styles.issueBody}>{issue.node.body}</p>              
+              <p className={styles.issueState} style={{color: issue.node.state === "CLOSED" ? "purple" : "green"}}>{issue.node.state}</p>
+              <p className={styles.issueDate}>{new Date(issue.node.createdAt).toLocaleString()}</p>
             </div>
           ))}
-
         </section>
       </main>
 
       <footer>
       © {new Date().getFullYear()} George Drakoulakos
       </footer>
-
     </div>
   );
 }
